@@ -175,9 +175,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
   }
 
   public void prepare(MediaSource mediaSource, boolean resetPosition, boolean resetState) {
-    handler
-        .obtainMessage(MSG_PREPARE, resetPosition ? 1 : 0, resetState ? 1 : 0, mediaSource)
-        .sendToTarget();
+    handler.obtainMessage(MSG_PREPARE, resetPosition ? 1 : 0, resetState ? 1 : 0, mediaSource).sendToTarget();
   }
 
   public void setPlayWhenReady(boolean playWhenReady) {
@@ -311,10 +309,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
     try {
       switch (msg.what) {
         case MSG_PREPARE:
-          prepareInternal(
-              (MediaSource) msg.obj,
-              /* resetPosition= */ msg.arg1 != 0,
-              /* resetState= */ msg.arg2 != 0);
+          prepareInternal((MediaSource) msg.obj, /* resetPosition= */ msg.arg1 != 0, /* resetState= */ msg.arg2 != 0);
           break;
         case MSG_SET_PLAY_WHEN_READY:
           setPlayWhenReadyInternal(msg.arg1 != 0);
@@ -342,10 +337,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
               /* foregroundMode= */ msg.arg1 != 0, /* processedFlag= */ (AtomicBoolean) msg.obj);
           break;
         case MSG_STOP:
-          stopInternal(
-              /* forceResetRenderers= */ false,
-              /* resetPositionAndState= */ msg.arg1 != 0,
-              /* acknowledgeStop= */ true);
+          stopInternal(/* forceResetRenderers= */ false, /* resetPositionAndState= */ msg.arg1 != 0, /* acknowledgeStop= */ true);
           break;
         case MSG_PERIOD_PREPARED:
           handlePeriodPrepared((MediaPeriod) msg.obj);

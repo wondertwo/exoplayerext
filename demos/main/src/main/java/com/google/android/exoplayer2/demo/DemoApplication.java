@@ -87,14 +87,10 @@ public class DemoApplication extends Application {
 
   public RenderersFactory buildRenderersFactory(boolean preferExtensionRenderer) {
     @DefaultRenderersFactory.ExtensionRendererMode
-    int extensionRendererMode =
-        useExtensionRenderers()
-            ? (preferExtensionRenderer
-                ? DefaultRenderersFactory.EXTENSION_RENDERER_MODE_PREFER
-                : DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
+    int extensionRendererMode = useExtensionRenderers() ?
+            (preferExtensionRenderer ? DefaultRenderersFactory.EXTENSION_RENDERER_MODE_PREFER : DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
             : DefaultRenderersFactory.EXTENSION_RENDERER_MODE_OFF;
-    return new DefaultRenderersFactory(/* context= */ this)
-        .setExtensionRendererMode(extensionRendererMode);
+    return new DefaultRenderersFactory(/* context= */ this).setExtensionRendererMode(extensionRendererMode);
   }
 
   public DownloadNotificationHelper getDownloadNotificationHelper() {

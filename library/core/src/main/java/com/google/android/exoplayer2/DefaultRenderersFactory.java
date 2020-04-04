@@ -108,8 +108,7 @@ public class DefaultRenderersFactory implements RenderersFactory {
    */
   @Deprecated
   @SuppressWarnings("deprecation")
-  public DefaultRenderersFactory(
-      Context context, @Nullable DrmSessionManager<FrameworkMediaCrypto> drmSessionManager) {
+  public DefaultRenderersFactory(Context context, @Nullable DrmSessionManager<FrameworkMediaCrypto> drmSessionManager) {
     this(context, drmSessionManager, EXTENSION_RENDERER_MODE_OFF);
   }
 

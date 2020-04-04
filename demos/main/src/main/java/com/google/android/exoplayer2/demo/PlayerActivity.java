@@ -345,6 +345,11 @@ public class PlayerActivity extends AppCompatActivity
 
   // Internal methods
 
+  // 1. Create a SimpleExoPlayer instance.
+  // 2. Attach the player to a view (for video output and user input). (playerView)
+  // 3. Prepare the player with a MediaSource to play.
+  // 4. Release the player when done.
+
   private void initializePlayer() {
     if (player == null) {
       Intent intent = getIntent();
@@ -354,8 +359,8 @@ public class PlayerActivity extends AppCompatActivity
         return;
       }
 
-      TrackSelection.Factory trackSelectionFactory;
       String abrAlgorithm = intent.getStringExtra(ABR_ALGORITHM_EXTRA);
+      TrackSelection.Factory trackSelectionFactory;
       if (abrAlgorithm == null || ABR_ALGORITHM_DEFAULT.equals(abrAlgorithm)) {
         trackSelectionFactory = new AdaptiveTrackSelection.Factory();
       } else if (ABR_ALGORITHM_RANDOM.equals(abrAlgorithm)) {
@@ -366,19 +371,14 @@ public class PlayerActivity extends AppCompatActivity
         return;
       }
 
-      boolean preferExtensionDecoders =
-          intent.getBooleanExtra(PREFER_EXTENSION_DECODERS_EXTRA, false);
-      RenderersFactory renderersFactory =
-          ((DemoApplication) getApplication()).buildRenderersFactory(preferExtensionDecoders);
+      boolean preferExtensionDecoders = intent.getBooleanExtra(PREFER_EXTENSION_DECODERS_EXTRA, false);
+      RenderersFactory renderersFactory = ((DemoApplication) getApplication()).buildRenderersFactory(preferExtensionDecoders);
 
       trackSelector = new DefaultTrackSelector(/* context= */ this, trackSelectionFactory);
       trackSelector.setParameters(trackSelectorParameters);
       lastSeenTrackGroupArray = null;
 
-      player =
-          new SimpleExoPlayer.Builder(/* context= */ this, renderersFactory)
-              .setTrackSelector(trackSelector)
-              .build();
+      player = new SimpleExoPlayer.Builder(/* context= */ this, renderersFactory).setTrackSelector(trackSelector).build();
       player.addListener(new PlayerEventListener());
       player.setPlayWhenReady(startAutoPlay);
       player.addAnalyticsListener(new EventLogger(trackSelector));
